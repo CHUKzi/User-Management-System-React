@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import DataTable from 'datatables.net-dt';
-import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Footer';
+import Header from '../Components/Header/Header';
+import Footer from '../Components/Footer/Footer';
 
-function App() {
+function ContactUs() {
 
   return (
-
-
     <>
-      <Header />
+    <Header/>
       <div className="container">
         <div className="row">
           <div className="col-sm-12 mt-3">
-            <h1>Home Page</h1>
-            <Footer />
+            
+            <h1>Contact Us Page</h1>
+            <Footer/> 
           </div>
         </div>
       </div>
@@ -23,4 +22,4 @@ function App() {
   )
 }
 
-export default App
+export default ContactUs
