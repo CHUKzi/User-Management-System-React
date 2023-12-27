@@ -1,57 +1,84 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import toastr from 'toastr';
 
-function UserRegisterForm() {
-  const navigate = useNavigate();
+function UserEdit() {
+    const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    mobile: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        mobile: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     });
-  };
 
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/v1/users/store', formData);
-      //console.log(response.data);
-      if (response.data.success === false) {
-        toastr.error(response.data.message);
-        setErrors(response.data.errorMessages);
-      } else {
-        toastr.success(response.data.message);
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const userId = searchParams.get('user_id');
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/v1/users/find?id=${userId}`);
+                const userData = response.data.data;
+
+                setFormData({
+                    first_name: userData.first_name,
+                    last_name: userData.last_name,
+                    mobile: userData.mobile,
+                    email: userData.email,
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (userId) {
+            fetchUserData();
+        }
+    }, [userId]);
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
         setFormData({
-          first_name: '',
-          last_name: '',
-          mobile: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
+            ...formData,
+            [e.target.name]: e.target.value,
         });
+    };
 
-        setErrors({});
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-        navigate('/users');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/v1/users/update/${userId}`, formData);
 
+            if (response.data.success === false) {
+                toastr.error(response.data.message);
+                setErrors(response.data.errorMessages);
+            } else {
+                toastr.success(response.data.message);
+
+                setFormData({
+                    first_name: '',
+                    last_name: '',
+                    mobile: '',
+                    email: '',
+                    password: '',
+                    password_confirmation: '',
+                });
+
+                setErrors({});
+
+                navigate('/users');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <>
@@ -59,7 +86,7 @@ function UserRegisterForm() {
                 <div className="col-sm-12 mt-3">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">User Register Form</h5>
+                            <h5 className="card-title">User Edit Form</h5>
                             <form className="mt-3">
                                 <div className="row">
 
@@ -183,7 +210,7 @@ function UserRegisterForm() {
                                     <Link to="/users"><button type="button" className="btn btn-danger px-5">Back</button></Link>
                                     &nbsp;
                                     <button type="button" className="btn btn-primary px-5" onClick={handleSubmit}>
-                                        Create
+                                        Update
                                     </button>
                                 </div>
                             </form>
@@ -195,4 +222,4 @@ function UserRegisterForm() {
     )
 }
 
-export default UserRegisterForm
+export default UserEdit

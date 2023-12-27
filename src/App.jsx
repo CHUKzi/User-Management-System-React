@@ -14,6 +14,7 @@ function App() {
         <div className="row">
           <div className="col-sm-12 mt-3">
             <h1>Home Page</h1>
+            <button type="button" class="btn btn-secondary">Secondary</button>
             <Footer />
           </div>
         </div>
