@@ -13,7 +13,6 @@ function Header() {
               <MenuLink linkName="Home" url="/" />
               <MenuLink linkName="About" url="/about" />
               <MenuLink linkName="Users" url="/users" />
-              <MenuLink linkName="Registration " url="/registration" />
               <MenuLink linkName="Contact Us" url="/contact" />
             </ul>
 
