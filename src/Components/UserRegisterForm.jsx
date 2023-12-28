@@ -45,7 +45,7 @@ function UserRegisterForm() {
 
         setErrors({});
 
-        navigate('/users');
+        navigate('/user/dashboard');
       }
     } catch (error) {
       console.error(error);
@@ -180,7 +180,7 @@ function UserRegisterForm() {
 
                                 </div>
                                 <div className="text-sm-end mt-3">
-                                    <Link to="/users"><button type="button" className="btn btn-danger px-5">Back</button></Link>
+                                    <Link to="/user/dashboard"><button type="button" className="btn btn-danger px-5">Back</button></Link>
                                     &nbsp;
                                     <button type="button" className="btn btn-primary px-5" onClick={handleSubmit}>
                                         Create

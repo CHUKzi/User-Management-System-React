@@ -2,9 +2,10 @@ import { useState } from 'react'
 import DataTable from 'datatables.net-dt';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
-import UsersTable from '../Components/UsersTable';
+import UserEditForm from '../Components/UserEditForm';
+import UserLogin from '../Components/UserLogin';
 
-function Users() {
+function Login() {
 
   return (
     <>
@@ -12,8 +13,8 @@ function Users() {
       <div className="container">
         <div className="row">
           <div className="col-sm-12 mt-3">
-            <h1>Users Page</h1>
-            <UsersTable/>
+            {/* <h1>User Login Page</h1> */}
+            <UserLogin/>
             <Footer/> 
           </div>
         </div>
@@ -23,4 +24,4 @@ function Users() {
   )
 }
 
-export default Users
+export default Login

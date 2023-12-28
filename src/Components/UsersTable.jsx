@@ -52,6 +52,7 @@ function UsersTable() {
 
     return (
         <>
+        
             <div className="text-sm-end mt-3">
                 <Link to="/registration" className="btn btn-primary px-5">Create New User </Link>
             </div>
@@ -84,11 +85,11 @@ function UsersTable() {
                                     &nbsp;
                                     <Link to={`/edituser?user_id=${user.id}`}>
                                         <button type="button" className="btn btn-success btn-sm">
-                                            <i class="fas fa-edit align-middle"></i>&nbsp;Edit
+                                            <i className="fas fa-edit align-middle"></i>&nbsp;Edit
                                         </button></Link>
                                     &nbsp;
                                     <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(user.id)}>
-                                        <i class="fas fa-trash align-middle"></i>&nbsp;Delete
+                                        <i className="fas fa-trash align-middle"></i>&nbsp;Delete
                                     </button>
                                 </td>
                             </tr>
