@@ -1,3 +1,6 @@
+
+<p align="center"><img src="https://github.com/CHUKzi/User-Management-System-React/blob/master/public/project_ss_v.1_users.png?raw=true" width="700" alt="Laravel Logo"></p>
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
