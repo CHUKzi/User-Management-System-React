@@ -4,7 +4,6 @@ import toastr from 'toastr';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-
 function UserLogin() {
     const navigate = useNavigate();
 
@@ -19,11 +18,10 @@ function UserLogin() {
             ...formData,
             [e.target.name]: e.target.value,
         });
-    
 
         setErrors({
             ...errors,
-            [e.target.name]: '', 
+            [e.target.name]: '',
         });
     };
 
@@ -41,10 +39,7 @@ function UserLogin() {
             
             if (response.data.token) {
                 const token = response.data.token;
-                
                 Cookies.set('authToken', token, { expires: 1 });
-
-
                 navigate('/user/dashboard');
             }
 

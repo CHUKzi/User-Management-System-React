@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import toastr from 'toastr';
 import Swal from 'sweetalert2';
+import 'datatables.net-dt/css/jquery.dataTables.css';
+import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
+import $ from 'jquery';
+import 'datatables.net-buttons/js/dataTables.buttons';
+import 'datatables.net-buttons/js/buttons.html5';
+import 'datatables.net-buttons/js/buttons.print';
+import { Link } from 'react-router-dom';
 
 function UsersTable() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const tableRef = useRef(null);
 
     const fetchUsers = async () => {
         try {
@@ -23,6 +30,39 @@ function UsersTable() {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    useEffect(() => {
+        if (tableRef.current && !loading) {
+            $(tableRef.current).DataTable({
+                order: [[0, 'desc']],
+                aLengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                dom: 'l<"row"<"col-md-8"B><"col-md-4 pull-right"f>>rtip',
+                buttons: [
+                    {
+                        extend: 'csv',
+                        footer: true,
+                        charset: 'UTF-8',
+                        bom: true,
+                        text: '<i class="fas fa-file-csv"></i> Export to CSV',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        footer: true,
+                        text: '<i class="fas fa-print"></i> Print',
+                        exportOptions: {
+                            columns: ':not(.no-export)'
+                        }
+                    }
+                ],
+            });
+        }
+    }, [loading]);
 
     const handleDelete = (userId) => {
         Swal.fire({
@@ -52,18 +92,17 @@ function UsersTable() {
 
     return (
         <>
-        
-            <div className="text-sm-end mt-3">
+            <div className="text-sm-end mt-3 mb-4">
                 <Link to="/registration" className="btn btn-primary px-5">Create New User </Link>
             </div>
-            <table id="myTable" className="table table-striped">
+            <table ref={tableRef} className="table table-striped">
                 <thead>
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Mobile</th>
-                        <th>Action</th>
+                        <th className='no-export'>Action</th>
                     </tr>
                 </thead>
                 <tbody>
